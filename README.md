@@ -96,6 +96,9 @@ Make sure you have the following packages:
 * git
 
 
+If `apt-get` fails to install postgresql-9.3, then try replacing 9.3 for 9.4 in the packages.  
+
+
 **Setup Python**: 
 
 Python uses its own package manager to install/update/remove packages.  In general, the following installs python packages:
