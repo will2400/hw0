@@ -1,49 +1,53 @@
 # HW 0
 
-* Assigned: Sep 9
-* Due: 9/14 10AM
+* Assigned: January 5th
+* Due: January 8th 6PM
 
 
-The goal of this assignment is for you to set up Microsoft Azure.
+The goal of this assignment is to set up a Linux virtual machine and Postgres database running in Microsoft Azure.
 
 Many of the assignments in this class will use Microsoft's cloud computing
 infrastructure.  Using a cloud service like Microsoft (or Amazon, etc) makes it easy to
 share data sets, and quickly run any number of virtual machines that are
-identical for all students in the class.  We have credits from Azure,
-which we will use for this class (in this homework, we will use a free
-"micro" instance.)
+identical for all students in the class. For this homework, we will use a free
+instance, but we will provide educational credits for future assignments.
 
-
-<span style="color:#ff5511">**Caution: allocating and running services (e.g., virtual machines) on any cloud provider
+<span style="color:#ff5511">**Caution: running services (e.g., virtual machines) on any cloud provider
   costs money or credits.  It can be _very_ easy to spend more than you anticipated by leaving your services
   running.  Make it a habit to stop your services when not in use.  If you run out of credits,
   there's not much we (the staff) can do.**</span>
+
 
 ## Sign up and setup the OS
 
 **Signup**
 
-[register for an account](http://azure.microsoft.com/en-us/offers/ms-azr-0044p/)
+[Register for a free trial account](http://azure.microsoft.com/en-us/offers/ms-azr-0044p/)
 
 You may be asked to submit your credit card information for screening purposes, however _you will not be charged_ as
 the service will stop your account if your trial credits are used up.
-Once the class registration has settled down, we can provide you with information to use the class's Azure credits.
+Once the class registration has settled down, we will provide you with information to use the class's Azure credits.
 
 
 **Launch an instance**
 
-1. Go to [https://manage.windowsazure.com/](https://manage.windowsazure.com)
-2. Click "NEW" in the bottom left of the screen
-3. Click "Compute", then "Virtual Machine", then "Quick Create"
-4. In DNS Name, provide a name for your new machine/website
-5. In Image, pick **Ubuntu Server 14.04 LTS**
-6. In Size, pick **D1 (1 core, 3.5 GB Memory)**
-7. Pick a username and password and remember them
-8. In Region, you can optionally pick East US or East US 2.  It will allocate your machine in a data center on the East Coast, so latency to the VM should be faster.
-9. Click "Create Virtual Machine" and wait a couple minutes for it to launch.
-1. Click on "Virtual Machines" in the main left panel to see your VMs
-2. Once the VM has started, click on it, then click on the "Dashboard" tab
-3. You should see your machine's DNS Name as <name you picked>.cloudapp.net.  **this is your public address**
+1. Go to [https://portal.azure.com/](https://portal.azure.com/).
+2. Click "Resource groups" in the top left of the screen.
+3. Click "Add".
+3. Type any name (e.g. "w4111").
+4. Change "Resource group location" to "East US".
+5. Click Create.
+6. Click "+ New" in the top left of the screen.
+7. Click "Compute", then select **Ubuntu Server 14.04 LTS** under Featured Apps.
+8. Click Create (leave "deployment model" at the default: "Resource Manager").
+9. Click on "Basics".
+10. In "User name" type the name for your account on your own machine, and fill in a password (please use a "good" one).
+11. In "Resource group" click the arrow on the right hand side and select the group you created in step 5.
+12. Click OK at the bottom.
+13. In the "Size" section, choose "A1 Standard" on the right.
+14. In the "Settings" section click "OK" at the bottom.
+15. In the "Summary" section click "OK". This will display a message that it is creating your machine.
+16. You should see your machine's DNS Name as `<yourname>.cloudapp.net`. This is your machine's Internet name, and you'll need to remember it to connect in the future.
 
 
 **SSH to Your Instance**
@@ -52,7 +56,13 @@ Using a terminal program (e.g, MacOS Terminal, or an xterm on Athena, or a Cygwi
 
     ssh <username>@<vm name>.cloudapp.net
 
-It will ask for your password, once you enter you should see something like:
+It will first ask to verify the identity of the server with the following message:
+
+    The authenticity of host 'hellodb.cloudapp.net (168.61.188.128)' can't be established.
+    RSA key fingerprint is 30:6f:12:df:b0:a7:4f:cc:f6:ee:19:a6:11:e5:2a:e9.
+    Are you sure you want to continue connecting (yes/no)?
+
+Type "yes" and press enter. You will only need to do this once. It will then ask for your password. After you enter it, you should see something like:
 
     Welcome to Ubuntu 14.04.3 LTS (GNU/Linux 3.19.0-25-generic x86_64)
 
@@ -73,9 +83,11 @@ It will ask for your password, once you enter you should see something like:
 
 
     Last login: Wed Aug 19 04:28:23 2015 from columbia.edu
-    eugenewu@ewutest:~$
+    ej@hellodb:~$
 
-**Setup the OS**
+
+**Install additional software**
+
 
 Ensure the following packages are available using the Ubuntu package management tool _apt-get_.  
 
@@ -83,7 +95,15 @@ To install a package, type:
 
     sudo apt-get install <packagename1 packagename2 ...>
 
-Make sure you have the following packages:
+Use this command to install the following packages:
+
+* postgresql-9.3
+* sqlite3
+
+
+
+
+* 
 
 * python2.7
 * python-pip
@@ -94,9 +114,6 @@ Make sure you have the following packages:
 * python-dev
 * sqlite3
 * git
-
-
-If `apt-get` fails to install postgresql-9.3, then try replacing 9.3 for 9.4 in the packages.  
 
 
 **Setup Python**: 
@@ -200,7 +217,8 @@ To ensure it is installed, type `sqlite3` and verify that you see the following:
     Enter SQL statements terminated with a ";"
     sqlite>
 
-If you do, push `ctrl+d` to exit the prompt.
+If you do, press `CTRL-D` to exit the prompt (or type `.quit`).
+
 
 **PostgreSQL**
 
@@ -219,22 +237,6 @@ Type `cat hw0/README.md`
 
 You should see the instructions for this hw fly by.
 
-
-    
-
-<!--
-**(Optional) PostgreSQL using Amazon RDS**
-
-PostgreSQL is an open source standalone database server (a DBMS!)  
-Amazon provides a **cloud database service** that makes it easy to 
-start and access a PostgreSQL (or MySQL, etc) database without the hassle
-of installation.  If you have an Amazon AWS account or a trial account, you can setup your own database on Amazon.  **This is compeletly optional because Amazon asks for your credit card information**
-
-Set it up by logging into your [aws.amazon.com](http://aws.amazon.com) account and following
-[**the instructions**](./rdssetup.pdf).  
-
-If you can run `psql` and access your RDS database, then push `ctrl+d` to exit the `psql` prompt.
--->
 
 
 ## Perform some data analysis
@@ -287,17 +289,16 @@ Whew, you're almost done!  Go read the assigned readings.
 You can always send us questions on [Piazza](https://piazza.com/class/id26ml2f2m0ju)!
 
 
-
-
 ## Stop your virtual machine
 
 While your free trial is pretty good,  it's very easy to accidentally use up all of your credits (including those the course will provide you).
 To conserve your hours (and avoid wasting energy), make sure to turn off your machine **whenever you are not using it**. 
 
-1. Go to the [Azure Console](https://manage.windowsazure.com/).
-1. In the left panel, click on "Virtual Machines"
-2. Select your VM
-3. Click "Shut Down" in the menu at the bottom of the screen
-4. To resume the VM,  click "Start" in the menu
-5. Before doing future assignments, you'll have to follow these instructions and choose "Start" to restart your instance.  Note that Shutting down and Starting the instance will potentially change the "Public DNS" value for that instance, however the URL <name>.cloudapp.net will stay the same.
+1. Go to the [Azure Console](https://portal.azure.com/).
+2. In the left panel, click on "Virtual Machines".
+3. Select your VM.
+4. Click "Stop" in the menu at the top of the screen, then click "Yes".
+5. To resume the VM,  click "Start" in the menu.
+6. Before doing future assignments, you'll have to follow these instructions and choose "Start" to restart your instance.  Note that Shutting down and Starting the instance will potentially change the "Public DNS" value for that instance, however the URL <name>.cloudapp.net will stay the same.
 
+*NOTE*: Turning off your machine from the command prompt does not seem to work on Azure, so always turn off the VM through the console (this does work on AWS and Google Cloud, so this is probably an Azure-specific bug).
