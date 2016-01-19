@@ -1,14 +1,14 @@
 # HW 0
 
-* Assigned: January 5th
-* Due: January 8th 6PM
+* Assigned: January 19th
+* Due: January 21st 8:40 AM
 
 
 The goal of this assignment is to set up a Linux virtual machine and Postgres database running in Microsoft Azure.
 
 Many of the assignments in this class will use Microsoft's cloud computing
 infrastructure.  Using a cloud service like Microsoft (or Amazon, etc) makes it easy to
-share data sets, and quickly run any number of virtual machines that are
+share data, and run any number of virtual machines that are
 identical for all students in the class. For this homework, we will use a free
 instance, but we will provide educational credits for future assignments.
 
@@ -47,14 +47,14 @@ Once the class registration has settled down, we will provide you with informati
 13. In the "Size" section, choose "A1 Standard" on the right.
 14. In the "Settings" section click "OK" at the bottom.
 15. In the "Summary" section click "OK". This will display a message that it is creating your machine.
-16. You should see your machine's DNS Name as `<yourname>.cloudapp.net`. This is your machine's Internet name, and you'll need to remember it to connect in the future.
+16. After it starts, you will see a number in "Public IP" like 40.76.207.44, this is your machine's address.
 
 
 **SSH to Your Instance**
 
 Using a terminal program (e.g, MacOS Terminal, or an xterm on Athena, or a Cygwin terminal under windows), type:
 
-    ssh <username>@<vm name>.cloudapp.net
+    ssh <username>@<IP address>
 
 It will first ask to verify the identity of the server with the following message:
 
@@ -98,22 +98,12 @@ To install a package, type:
 Use this command to install the following packages:
 
 * postgresql-9.3
-* sqlite3
-
-
-
-
-* 
-
-* python2.7
-* python-pip
-* postgresql-9.3
-* postgresql-client-9.3
 * postgresql-server-dev-9.3
-* libpq-dev
-* python-dev
 * sqlite3
 * git
+* python-virtualenv
+* python-dev
+
 
 
 **Setup Python**: 
@@ -124,14 +114,14 @@ Python uses its own package manager to install/update/remove packages.  In gener
     
 Typically the package manager will require `sudo` and install the packages in a global folder that affects everyone using your machine.  This is bad hygiene because different python applications may use different versions of packages and it's easy to step on each other's toes.  
 
-We will use `virtualenv` to create virtual environments that contain their own copies of `python` and packages.  When we work in a virtual environment, pip will install packages local to the environment rather than globbaly.  You can read [a detailed tutorial](http://docs.python-guide.org/en/latest/dev/virtualenvs/).
+We will use `virtualenv` to create virtual environments that contain their own copies of `python` and packages.  When we work in a virtual environment, pip will install packages local to the environment rather than globbaly.  You can read [a detailed tutorial](http://docs.python-guide.org/en/latest/dev/virtualenvs/). We installed the `virtualenv` command with apt-get above.
     
 Lets setup your environment
 
-1. Install `virtualenv` and convenience libraries in `virtualenvwrapper` (this is the one time you should install globally)
+1. Install some helper commands from the `virtualenvwrapper` package (this is the one time you should install globally)
 
-        sudo pip install virtualenv virtualenvwrapper
-2. add the wrapper commands (you may add this line in ~/.bashrc so it runs when you create a bash shell)
+        sudo pip install virtualenvwrapper
+2. add the wrapper commands (you may add this line in `~/.bashrc` so it runs when you create a bash shell)
 
         source /usr/local/bin/virtualenvwrapper.sh
 3. create a new environment (will create a folder `test/` in `~/.virtualenvs/`)
@@ -259,35 +249,12 @@ Ignore upper and lower casing, so "Single Malt Scotch", and "SINGLE Malt Scotch"
 
 ## Submitting your work
 
-Submit your assignment at http://goo.gl/forms/YzQ1DwHzMy
+Submit your assignment at http://goo.gl/forms/SQzmn4T4xd
 
 **Note that you must be logged in to Columbia's lionmail to submit, and we will only consider your _first_ submission**.
 
 
-<!--You should create a text (.txt) file with the following format:
-
-    <YOURNAME>
-    <Student UNI>
-    <# of single malt scotch records>
-    <your python program>
-
-For example:
-
-    Eugene Wu
-    ew2493
-    9
-    import sys
-    num_whiskies = 0
-    num_whiskies += 9
-    print num_whiskies
-
-Upload it to the [coureworks website](http://courseworks.columbia.edu/) as the "hw0" assignment.
--->
-
 Whew, you're almost done!  Go read the assigned readings.
-
-You can always send us questions on [Piazza](https://piazza.com/class/id26ml2f2m0ju)!
-
 
 ## Stop your virtual machine
 
@@ -301,4 +268,4 @@ To conserve your hours (and avoid wasting energy), make sure to turn off your ma
 5. To resume the VM,  click "Start" in the menu.
 6. Before doing future assignments, you'll have to follow these instructions and choose "Start" to restart your instance.  Note that Shutting down and Starting the instance will potentially change the "Public DNS" value for that instance, however the URL <name>.cloudapp.net will stay the same.
 
-*NOTE*: Turning off your machine from the command prompt does not seem to work on Azure, so always turn off the VM through the console (this does work on AWS and Google Cloud, so this is probably an Azure-specific bug).
+*NOTE*: Turning off your machine from the command prompt does not work on Azure (this seems to be "by design" which seems ... strange).
