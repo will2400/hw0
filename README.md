@@ -248,6 +248,11 @@ Ignore upper and lower casing, so "Single Malt Scotch", and "SINGLE Malt Scotch"
 "Single's Malty Scootch" does not.
 
 
+## Getting code to your machine
+
+We recommend writing your program on your local machine, in your favourite text editor (I use [Sublime Text](http://www.sublimetext.com/) but there are many other good ones). You can then copy this file to your VM with scp: `scp <filename.py> <username>@<ip address>:`. Each time you edit it, you need to copy it, which is a bit annoying, but does work.
+
+
 
 ## Submitting your work
 
