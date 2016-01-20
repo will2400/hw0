@@ -52,7 +52,7 @@ Once the class registration has settled down, we will provide you with informati
 
 **SSH to Your Instance**
 
-*Windows Users*: You can use [PuTTY](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html) on Windows) to connect to your VM, or install [Cygwin](https://www.cygwin.com/) and follow the direction below.
+*Windows Users*: You can use [PuTTY](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html) to connect to your VM, or install [Cygwin](https://www.cygwin.com/) and follow the direction below.
 
 Using a terminal program (e.g, Terminal on Mac, xterm on Athena, or Cygwin on Windows), type the following (replacing the words in `<angle brackets>` with the values from above).
 
