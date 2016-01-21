@@ -123,17 +123,20 @@ Lets setup your environment
 1. Install some helper commands from the `virtualenvwrapper` package (this is the one time you should install globally)
 
         sudo pip install virtualenvwrapper
-2. add the wrapper commands (you may add this line in `~/.bashrc` so it runs when you create a bash shell)
+2. Load the wrapper commands in the current shell:
 
         source /usr/local/bin/virtualenvwrapper.sh
-3. create a new environment (will create a folder `test/` in `~/.virtualenvs/`)
+3. To make sure this takes effect each time you log in, add that command to the end of your `~/.bashrc` file, either using an editor (like `nano ~/.bashrc`) or running the following:
+
+        echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.bashrc
+4. create a new environment (will create a folder `test/` in `~/.virtualenvs/`)
 
         mkvirtualenv test
-4. switch (activate) an environment by using `workon`
+5. switch (activate) an environment by using `workon`
 
         workon test
         
-5. switch out of an environment:
+6. switch out of an environment:
         
         deactivate
 
@@ -251,7 +254,6 @@ Ignore upper and lower casing, so "Single Malt Scotch", and "SINGLE Malt Scotch"
 ## Getting code to your machine
 
 We recommend writing your program on your local machine, in your favourite text editor (I use [Sublime Text](http://www.sublimetext.com/) but there are many other good ones). You can then copy this file to your VM with scp: `scp <filename.py> <username>@<ip address>:`. Each time you edit it, you need to copy it, which is a bit annoying, but does work.
-
 
 
 ## Submitting your work
